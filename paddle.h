@@ -3,6 +3,8 @@
 
 #include "entity.h"
 
+class Ball;
+
 class Paddle : public Entity {
 public:
 	int points = 0;
@@ -12,6 +14,7 @@ public:
 
 	void draw(SDL_Renderer *renderer) override;
 	void update(int maxHeight, Vector2 dir, int speed);
+	void aiUpdate(const Ball& ball, int maxHeight);
 };
 
 #endif // PADDLE_h

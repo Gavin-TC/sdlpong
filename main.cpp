@@ -7,6 +7,9 @@
 
 void drawMiddleLine(int screenWidth, int screenHeight, int segments, SDL_Renderer* renderer);
 
+// TODO:
+//		- Render score with text
+//		- Play sounds when ball hits something or a paddle scores
 int main(int argc, char* argv[]) {
 	const int screenWidth = 1280;
 	const int screenHeight = 720;
@@ -61,7 +64,7 @@ int main(int argc, char* argv[]) {
 		SDL_RenderClear(renderer);
 
 		leftPaddle.update(screenHeight, paddleDir, 10);
-		rightPaddle.update(screenHeight, Vector2(0), 1);
+		rightPaddle.aiUpdate(ball, screenHeight);
 
 		ball.update(screenWidth,
 					screenHeight,
