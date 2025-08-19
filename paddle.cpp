@@ -14,14 +14,11 @@ void Paddle::draw(SDL_Renderer *renderer) {
 void Paddle::update(int maxHeight, Vector2 dir, int speed) {
 	velocity.y += dir.y * speed;
 
-	if (rect.y + velocity.y > 0 && rect.y + rect.h + velocity.y < maxHeight)
-		rect.y += velocity.y;
+	rect.y += velocity.y;
 
-	// Slow down paddles movement
-	if (dir == 0 && velocity.y != 0) {
-		int zeroDir = -1 ? velocity.y < 0 : 1;
-		velocity.y += zeroDir;
-	}
+	// Clamp the y to stay within the screen
+	rect.y = std::max(rect.y, 0);
+	rect.y = std::min(rect.y, maxHeight - rect.h);
 
 	velocity.y = 0;
 }
@@ -31,11 +28,11 @@ void Paddle::aiUpdate(const Ball& ball, int maxHeight) {
 	int ballCenter = ball.rect.y + ball.rect.h / 2;
 	int distance = std::abs(ballCenter - paddleCenter);
 
-	int maxSpeed = 100;
 	int minSpeed = 1;
-	int speed = std::min(maxSpeed, std::max(minSpeed, distance / 20));
+	int maxSpeed = 10;
+	int speed = std::min(std::max(minSpeed, distance / 10), maxSpeed);
 
-	int dir = (ballCenter > paddleCenter) ? 1 : -1;
+	int dir = ballCenter > paddleCenter ? 1 : -1;
 	velocity.y = dir * speed;
 
 	if (rect.y + velocity.y > 0 && rect.y + rect.h + velocity.y < maxHeight)

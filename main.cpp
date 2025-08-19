@@ -86,6 +86,12 @@ int main(int argc, char* argv[]) {
 				std::cout << "left paddle has scored. new score: " << leftPaddle.points << std::endl;
 			}
 
+			leftPaddle.velocity = Vector2(0);
+			rightPaddle.velocity = Vector2(0);
+
+			leftPaddle.rect.y = startingY;
+			rightPaddle.rect.y = startingY;
+
 			justReset = true;
 			ball.freezeTicks = 60;
 		}
